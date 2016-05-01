@@ -1,0 +1,82 @@
+<div ng-include="'partials/header.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-sm-2"></div>
+        <div class="col-md-6 col-sm-8 col-xs-12">
+            <br>
+            <div ></div>
+            <ul ng-attr-id="certificate-{{$index}}" class="list-group" ng-repeat="certificate in certificates" ng-controller="CertificateCtrl">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            Cert No. {{certificate.certificateId}}
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            Container Ref: {{certificate.reference}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <img ng-src="carrier-logos/{{certificate.carrierCode}}.png"
+                                style="max-height:20px;">
+                        </div>
+                        <div class="col-xs-2">
+                            {{certificate.size}}' {{certificate.type}}
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            <i>Tare:</i>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{certificate.tareWeightLb}} Lb
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{certificate.tareWeightKg}} Kg
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item" ng-repeat="item in certificate.cargoItems">
+                    <div class="row">
+                        <div class="col-xs-6 text-right">
+                            <i>{{item.description}}:</i>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{item.weightLb}} Lb
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{item.weightKg}} Kg
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-6 text-right">
+                            <i>VGM:</i>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{certificate.vgmLb}} Lb
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            {{certificate.vgmKg}} Kg
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            {{certificate.certifiedAt | utcTimestampFormat}}
+                        </div>
+                        <div class="col-xs-6">
+                            <i>signed by</i> {{certificate.firstNameSignature}} {{certificate.lastNameSignature}}
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            <span class="glyphicon glyphicon-print nyshex-print-btn" ng-click="printCertificate($index)"></span>
+                        </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-2"></div>
+    </div>
+</div>

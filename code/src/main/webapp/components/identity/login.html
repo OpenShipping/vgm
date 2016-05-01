@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-sm-3"></div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <br>
+                <h2 class="text-center">NYSHEX VGMS</h2>
+                <h3 class="text-center has-success" ng-if="activation.activated">
+                    Congratulations, your account is now active.
+                </h3>
+                <h3 class="text-center has-warning" ng-if="activation.previouslyActivated">
+                    This account has previously been activated.
+                </h3>
+                <h3 class="text-center has-error" ng-if="unknownError">Unknown error</h3>
+                <form name="loginForm" ng-submit="login()">
+                    <br>
+                    <h4>Please sign in:</h4>
+                    <div class="form-group" ng-class="{'has-success': loginForm.loginName.$valid && !invalidCredentials,
+                                                       'has-error': invalidCredentials}">
+                        <input type="text" class="form-control" placeholder="Username"
+                            ng-model="newUser.userId" name="loginName" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group" ng-class="{'has-success': loginForm.loginName.$valid && !invalidCredentials,
+                                                       'has-error': invalidCredentials}">
+                        <input type="password" class="form-control" placeholder="Password"
+                            ng-model="newUser.password" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <span class="help-block" ng-if="invalidCredentials">Invalid Username or Password.</span>
+                        <input type="submit" class="btn btn-md btn-primary btn-block nyshex-submit-btn"
+                            value="Login" ng-disabled="loginForm.$invalid">
+                    </div>
+                    <br>
+                    <a href="#/register">Not registered?</a>
+                    <br>
+                </form>
+            </div>
+        <div class="col-md-4 col-sm-3"></div>
+    </div>
+</div>

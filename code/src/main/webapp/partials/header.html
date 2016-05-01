@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavigationCtrl">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="navbar-collapse-1" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/vgm-certificates">
+                <img data-nav-icon style="max-width:90px; margin-top:-10px;" src="NYSHEX Logo White.png">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#/vgm-certificates/new" data-tooltip-placement="bottom" uib-tooltip="Create New VGM Certificate">
+                        <span class="glyphicon glyphicon-plus nav-icon"></span>
+                    </a>
+                </li>
+                <li ng-if="isNYSHEX">
+                    <a href="#/shipping-containers/new" data-tooltip-placement="bottom" uib-tooltip="Upload New Containers">
+                        <span class="glyphicon glyphicon-upload nav-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/vgm-certificates" data-tooltip-placement="bottom" uib-tooltip="View all past VGM Certificates">
+                        <span class="glyphicon glyphicon-th-list nav-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/profile" data-tooltip-placement="bottom" uib-tooltip="View/Update your Profile">
+                        <span class="glyphicon glyphicon-user nav-icon"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="" data-tooltip-placement="bottom" uib-tooltip="Logout"
+                        ng-click="logout()">
+                        <span class="glyphicon glyphicon-log-out nav-icon"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>

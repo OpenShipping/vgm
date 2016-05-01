@@ -1,0 +1,169 @@
+<div ng-include="'partials/header.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-sm-2"></div>
+            <div class="col-md-6 col-sm-8 col-xs-12">
+
+                <input type="text" class="form-control" placeholder="Enter container number"
+                    ng-disabled="selectedContainer" ng-model="containerSearch"
+                    ng-model-options="{ debounce: 1500 }"
+                    ng-change="searchForContainers()">
+
+                <p ng-if="!selectedContainer">
+                    <br>
+                    <i>Click on the corresponding container:</i>
+                </p>
+                <p></p>
+                <div class="row" ng-if="selectedContainer">
+                    <div class="col-xs-12">
+                        <input type="button" class="btn btn-md btn-danger btn-block"
+                            value="Decline"
+                            ng-click="decline()">
+                    </div>
+                </div>
+                <p></p>
+                <form name="VGMForm" ng-submit="submitVgmForm()">
+                    <div ng-repeat="(containerIndex, container) in containerSearchResults">
+                        <ul class="list-group">
+                            <li class="list-group-item"
+                                ng-class="{'nyshex-container-btn': !selectedContainer}"
+                                ng-click="selectContainer(containerIndex)">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <img ng-src="carrier-logos/{{container.carrierCode}}.png"
+                                            style="max-height:20px;">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        {{container.size}}' {{container.type}}
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                        <i>Tare:</i>
+                                    </div>
+                                    <div class="col-xs-3 text-right">
+                                        {{container.tareWeightLb}} Lb
+                                    </div>
+                                    <div class="col-xs-3 text-right">
+                                        {{container.tareWeightKg}} Kg
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" ng-repeat="(cargoItemIndex, cargoItem) in container.cargoItems"
+                                ng-if="selectedContainer">
+                                <div class="row">
+                                    <div class="col-xs-12"><p></p></div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group form-group"
+                                            ng-class="{'has-error': VGMForm['cargoItem-{{cargoItemIndex}}-weightLb'].$invalid,
+                                                'has-success': VGMForm['cargoItem-{{cargoItemIndex}}-weightLb'].$valid}">
+                                            <input type="number" class="form-control" min="0"
+                                                placeholder="Weight"
+                                                ng-model="cargoItem.weightLb"
+                                                name="cargoItem-{{cargoItemIndex}}-weightLb"
+                                                step=".001"
+                                                ng-change="cargoItem.weightKg = lbToKg(cargoItem.weightLb);
+                                                           updateTotals();"
+                                                ng-disabled="certificateSaved" required>
+                                            <span class="input-group-addon">Lb</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group form-group"
+                                            ng-class="{'has-error': VGMForm['cargoItem-{{cargoItemIndex}}-weightKg'].$invalid,
+                                            'has-success': VGMForm['cargoItem-{{cargoItemIndex}}-weightKg'].$valid}">
+                                            <input type="number" class="form-control" min="0"
+                                                placeholder="Weight"
+                                                ng-model="cargoItem.weightKg"
+                                                name="cargoItem-{{cargoItemIndex}}-weightKg"
+                                                step="0.001"
+                                                ng-change="cargoItem.weightLb = kgToLb(cargoItem.weightKg);
+                                                           updateTotals();"
+                                                ng-disabled="certificateSaved" required>
+                                            <span class="input-group-addon">Kg</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12"><p></p></div>
+                                    <div class="col-xs-1 text-center navbar-btn"
+                                        ng-if="$last">
+                                        <span class="glyphicon glyphicon-remove"
+                                            ng-class="{'nyshex-remove-btn':container.cargoItems.length>1,
+                                                'nyshex-remove-btn-disabled':container.cargoItems.length<2}"
+                                            ng-click="removeCargoItem()"></span>
+                                    </div>
+                                    <div class="col-xs-1 text-center navbar-btn"
+                                        ng-if="$last">
+                                        <span class="glyphicon glyphicon-plus nyshex-add-btn disabled"
+                                            ng-click="addCargoItem()"></span></div>
+                                    <div ng-class="{'col-xs-10' : $last, 'col-xs-12': !$last}">
+                                        <div class="form-group"
+                                                ng-class="{'has-error': VGMForm['cargoItem-{{cargoItemIndex}}-description'].$invalid,
+                                                'has-success': VGMForm['cargoItem-{{cargoItemIndex}}-description'].$valid}">
+                                            <input type="text" class="form-control" placeholder="Description"
+                                                ng-model="cargoItem.description"
+                                                name="cargoItem-{{cargoItemIndex}}-description"
+                                                ng-disabled="certificateSaved" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" style="border-top: double #ddd;"
+                                ng-if="selectedContainer">
+                                <p></p>
+                                <div class="row">
+                                    <div class="col-xs-6 text-right">
+                                        <i>Verified Gross Mass:</i>
+                                    </div>
+                                    <div class="col-xs-3 text-right">
+                                        <strong>{{totalWeightLb}} Lb</strong>
+                                    </div>
+                                    <div class="col-xs-3 text-right">
+                                        <strong>{{totalWeightKg}} Kg</strong>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p>I hereby verify the contents of the container were weighed on a certified
+                                            scale and are accurate.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group"
+                                            ng-class="{'has-error': container.firstNameSignature != firstNameToMatch,
+                                            'has-success': container.firstNameSignature == firstNameToMatch}">
+                                            <input type="text" class="form-control" placeholder="{{firstNameToMatch}}"
+                                            name="firstNameSignature" ng-model="container.firstNameSignature"
+                                            ng-disabled="certificateSaved" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group"
+                                            ng-class="{'has-error': container.lastNameSignature != lastNameToMatch,
+                                            'has-success': container.lastNameSignature == lastNameToMatch}">
+                                            <input type="text" class="form-control" placeholder="{{lastNameToMatch}}"
+                                            name="lastNameSignature" ng-model="container.lastNameSignature"
+                                            ng-disabled="certificateSaved" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4 ng-if="certificateSaved">Your new certificate has been processed.</h4>
+                                        <input type="submit" class="btn btn-md btn-primary btn-block nyshex-submit-btn"
+                                            value="Confirm"
+                                            ng-disabled="VGMForm.$invalid ||
+                                                         container.firstNameSignature != firstNameToMatch ||
+                                                         container.lastNameSignature != lastNameToMatch ||
+                                                         certificateSaved">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
+            </div>
+        <div class="col-md-3 col-sm-2"></div>
+    </div>
+</div>

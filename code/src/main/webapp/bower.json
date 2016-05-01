@@ -1,0 +1,30 @@
+{
+  "name": "nyshexcs",
+  "homepage": "https://github.com/gordondownes/nyshexcs",
+  "authors": [
+    "Kim Hansen <kim@ange.dk>"
+  ],
+  "description": "New York Shipping Exchange Contracting System",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "Private",
+  "private": true,
+  "ignore": [
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "~3.3.6",
+    "jquery": "<2",
+    "font-awesome": "~4.5.0",
+    "moment": "~2.10.6",
+    "moment-timezone": "~0.5.0",
+    "less": "~2.5.3",
+    "angular-resource": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "ng-file-upload": "~10.1.2",
+    "angular-bootstrap": "~0.14.3",
+    "angular-animate": "~1.4.8",
+    "ngInfiniteScroll": "~1.2.2"
+  }
+}

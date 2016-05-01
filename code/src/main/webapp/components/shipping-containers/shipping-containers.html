@@ -1,0 +1,57 @@
+<div ng-include="'partials/header.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-sm-2"></div>
+            <div class="col-md-6 col-sm-8 col-xs-12">
+                <br>
+                <form name="shippingContainersCSVForm" ng-submit="submitCSV()">
+                    <div class="form-group">
+                        <label for="inputFile">Upload your file:</label>
+                        <input id="inputFile" type="file" ngf-select ng-model="shippingContainerCSV"
+                            ngf-pattern="'.csv'"
+                            accept=".csv"
+                            ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-md btn-primary btn-block" value="Upload"
+                            ng-disabled="submittedCSV || !shippingContainerCSV">
+                    </div>
+                </form>
+                <h4 ng-if="carrierNotFound">Could not find a carrier for the given SCAC code.</h4>
+                <h4 ng-if="duplicateCarriersFound">There was more than one businesses for the given SCAC code.
+                    Please contact the system administrator.</h4>
+                <br>
+                <table class="table table-striped table-bordered table-condensed">
+                    <tr>
+                        <th>#</th>
+                        <th>Reference</th>
+                        <th>Size</th>
+                        <th>Type</th>
+                        <th>Tare (Lb)</th>
+                        <th>Tare (Kg)</th>
+                        <th>Carrier Code</th>
+                    </tr>
+                    <tr ng-repeat="shippingContainer in shippingContainers">
+                        <td>{{$index + 1}}</td>
+                        <td>{{shippingContainer.reference}}</td>
+                        <td>{{shippingContainer.size}}</td>
+                        <td>{{shippingContainer.type}}</td>
+                        <td>{{shippingContainer.tareWeightLb}}</td>
+                        <td>{{shippingContainer.tareWeightKg}}</td>
+                        <td>{{shippingContainer.carrierCode}}</td>
+                    </tr>
+                </table>
+                <br>
+                <h4 ng-if="submittedData">Shipping container entries have been saved to the database.</h4>
+                <form name="shippingContainersDataForm" ng-submit="submitData()">
+                    <input type="submit" class="btn btn-md btn-primary btn-block"
+                        ng-disabled="!submittedCSV ||
+                                     submittedData" value="Save">
+                </form>
+                <br>
+                <br>
+            </div>
+        <div class="col-md-3 col-sm-2"></div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-sm-2"></div>
+            <div class="col-md-4 col-sm-8 col-xs-12">
+                <br>
+                <h2 class="text-center">NYSHEX VGMS</h2>
+                <form name="registrationForm"
+                    ng-submit="submitRegistration()">
+                    <br>
+                    <h4>Registration:</h4>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessName.$valid}">
+                        <input type="text" class="form-control" placeholder="Business Name"
+                            ng-model="businessName" name="businessName"
+                            ng-disabled="registered" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessType.$valid}">
+                        <select class="form-control"
+                            ng-model="businessType"
+                            ng-options="bt.description for bt in businessTypes"
+                            name="businessType"
+                            ng-disabled="registered" required>
+                            <option value="" disabled selected>Select your business type</option>
+                        </select>
+                    </div>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessAddress.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="Business Address"
+                            ng-model="businessAddress" name="businessAddress"
+                            ng-disabled="registered" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessCity.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="Business City"
+                            ng-model="businessCity" name="businessCity"
+                            ng-disabled="registered" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessPostalCode.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="Business Postal Code"
+                            ng-model="businessPostalCode" name="businessPostalCode"
+                            ng-disabled="registered"  required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.businessCountry.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="Business Country"
+                            ng-model="businessCountry" name="businessCountry"
+                            ng-disabled="registered"  required>
+                    </div>
+                    <p></p>
+                    <br>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.firstName.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="First Name"
+                            ng-model="firstName" name="firstName"
+                            ng-disabled="registered"  required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.lastName.$valid}">
+                        <input type="text" class="form-control"
+                            placeholder="Last Name"
+                            ng-model="lastName" name="lastName"
+                            ng-disabled="registered"  required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success': registrationForm.email.$valid &&
+                                                  !emailAlreadyExists,
+                                   'has-error':   emailAlreadyExists}">
+                        <span ng-if="emailAlreadyExists">An account for this address already exists.</span>
+                        <input type="email" class="form-control"
+                            placeholder="E-mail Address"
+                            ng-model="email" name="email"
+                            ng-disabled="registered"  required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success':
+                            registrationForm.password.$valid &&
+                            password == confirmPassword}">
+                        <input type="password" class="form-control"
+                            placeholder="Password"
+                            ng-model="password" name="password"
+                            ng-disabled="registered" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group"
+                        ng-class="{'has-success':
+                            registrationForm.password.$valid &&
+                            password == confirmPassword}">
+                        <input type="password" class="form-control"
+                            placeholder="Confirm Password"
+                            ng-model="confirmPassword" name="confirmPassword"
+                            ng-disabled="registered" required>
+                    </div>
+                    <div ng-if="registered" class="text-center">
+                        <h5>Registration submitted. Please check the e-mail provided
+                            and follow the link to activate your account.</h5>
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-md btn-primary btn-block nyshex-submit-btn"
+                            value="Register"
+                            ng-disabled="registrationForm.$invalid ||
+                                         password != confirmPassword ||
+                                         registered">
+                    </div>
+                </form>
+            </div>
+        <div class="col-md-4 col-sm-2"></div>
+    </div>
+</div>

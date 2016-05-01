@@ -1,0 +1,54 @@
+<div ng-include="'partials/header.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-sm-2"></div>
+            <div class="col-md-4 col-sm-8 col-xs-12">
+
+                <h5>Profile:</h5>
+                <div class="text-center">
+                    <p>{{profile.firstName}} {{profile.lastName}}</p>
+                    <p>{{profile.email}}</p>
+                    <br>
+                    <p>{{profile.businessName}} ({{profile.businessType}})</p>
+                    <p>{{profile.businessAddress}}</p>
+                    <p>{{profile.businessCity}} {{profile.businessPostalCode}} {{profile.businessCountry}}</p>
+                </div>
+                <br>
+                <h5>Change password:</h5>
+                <form name="passwordForm" ng-submit="updatePassword()">
+
+                    <div class="form-group" ng-class="{'has-error':invalidOldPassword,
+                                                       'has-success': updatedPassword}">
+                        <span ng-if="invalidOldPassword">Current password does not match.</span>
+                        <input type="password" class="form-control" placeholder="Current Password"
+                            ng-model="oldPassword" name="oldPassword"
+                            ng-disabled="updatedPassword" required>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error':newPasswordsDoNotMatch,
+                                                       'has-success':
+                    !newPasswordsDoNotMatch && passwordForm.password.$valid && passwordForm.confirmPassword.$valid}">
+                        <span ng-if="newPasswordsDoNotMatch">Passwords do not match.</span>
+                        <input type="password" class="form-control" placeholder="New Password"
+                            ng-model="password" name="password"
+                            ng-disabled="updatedPassword" required>
+                        <p></p>
+                        <input type="password" class="form-control" placeholder="Confirm New Password"
+                            ng-model="confirmPassword" name="confirmPassword"
+                            ng-disabled="updatedPassword" required>
+                    </div>
+                    <p></p>
+                    <div class="form-group" ng-class="{'has-success': updatedPassword}">
+                    <span ng-if="updatedPassword">Password updated.</span>
+                    <span ng-if="unknownError">Unknown error, please refresh the page and try again.</span>
+                    <input type="submit" class="btn btn-md btn-primary btn-block nyshex-submit-btn"
+                        value="Submit" ng-disabled="passwordForm.$invalid ||
+                                                    newPasswordsDoNotMatch ||
+                                                    updatedPassword">
+                    </div>
+                </form>
+
+            </div>
+        <div class="col-md-4 col-sm-2"></div>
+    </div>
+</div>
